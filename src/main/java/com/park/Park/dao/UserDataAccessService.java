@@ -5,9 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-@Repository("fakeDao")
+@Repository("postgre")
 public class UserDataAccessService implements UserDao {
     private static List<User> DB = new ArrayList<>();
 
@@ -20,5 +21,35 @@ public class UserDataAccessService implements UserDao {
     @Override
     public List<User> selectAllUsers() {
         return DB;
+    }
+
+    @Override
+    public Optional<User> selectUserById(UUID id) {
+        return DB.stream()
+                .filter( user -> user.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public int deteleUserById(UUID id) {
+        Optional<User> user = selectUserById(id);
+        if(user.isEmpty()){
+            return 0;
+        }
+        DB.remove(user.get());
+        return 1;
+    }
+
+    @Override
+    public int updateUserById(UUID id, User user) {
+        return selectUserById(id)
+                .map(u -> {
+                    int indexOfUserToUpdate = DB.indexOf(u);
+                    if(indexOfUserToUpdate >= 0){
+                        DB.set(indexOfUserToUpdate, new User(id, user.getUsername(), user.getPass()));
+                        return 1;
+                    }
+                    return 0;
+                }).orElse(0);
     }
 }

@@ -3,6 +3,7 @@ package com.park.Park.dao;
 import com.park.Park.model.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserDao {
@@ -15,5 +16,7 @@ public interface UserDao {
     }
 
     List<User> selectAllUsers();
-
+    Optional<User> selectUserById(UUID id);
+    int deteleUserById(UUID id);
+    int updateUserById(UUID id, User user);
 }

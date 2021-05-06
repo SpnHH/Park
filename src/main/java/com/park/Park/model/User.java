@@ -1,12 +1,15 @@
 package com.park.Park.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 
 import java.util.UUID;
 
 public class User {
     private final UUID id;
+    @NotNull
     private final String username;
+    @NotNull
     private final String pass;
 
     public User(@JsonProperty("id") UUID id,
