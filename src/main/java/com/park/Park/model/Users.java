@@ -5,16 +5,16 @@ import com.sun.istack.NotNull;
 
 import java.util.UUID;
 
-public class User {
+public class Users {
     private final UUID id;
     @NotNull
     private final String username;
     @NotNull
     private final String pass;
 
-    public User(@JsonProperty("id") UUID id,
-                @JsonProperty("username")String username,
-                @JsonProperty("pass")String pass) {
+    public Users(@JsonProperty("id") UUID id,
+                 @JsonProperty("username")String username,
+                 @JsonProperty("pass")String pass) {
         this.id = id;
         this.username = username;
         this.pass = pass;

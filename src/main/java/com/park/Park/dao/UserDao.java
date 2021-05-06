@@ -1,6 +1,6 @@
 package com.park.Park.dao;
 
-import com.park.Park.model.User;
+import com.park.Park.model.Users;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,15 +8,15 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    int  insertUser(UUID id, User user);
+    int  insertUser(UUID id, Users user);
 
-    default int insertUser(User user){
+    default int insertUser(Users user){
         UUID id = UUID.randomUUID();
         return insertUser(id,user);
     }
 
-    List<User> selectAllUsers();
-    Optional<User> selectUserById(UUID id);
+    List<Users> selectAllUsers();
+    Optional<Users> selectUserById(UUID id);
     int deteleUserById(UUID id);
-    int updateUserById(UUID id, User user);
+    int updateUserById(UUID id, Users user);
 }

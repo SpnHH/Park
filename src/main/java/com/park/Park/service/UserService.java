@@ -1,8 +1,7 @@
 package com.park.Park.service;
 
 import com.park.Park.dao.UserDao;
-import com.park.Park.model.User;
-import net.bytebuddy.asm.Advice;
+import com.park.Park.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,20 +20,20 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public int addUser(User user){
+    public int addUser(Users user){
         return userDao.insertUser(user);
     }
 
-    public List<User> getAllUser(){
+    public List<Users> getAllUser(){
         return userDao.selectAllUsers();
     }
-    public Optional<User> getUserById(UUID id){
+    public Optional<Users> getUserById(UUID id){
         return userDao.selectUserById(id);
     }
     public int deleteUser(UUID id){
         return userDao.deteleUserById(id);
     }
-    public int updateUser(UUID id, User newUser){
+    public int updateUser(UUID id, Users newUser){
         return userDao.updateUserById(id, newUser);
     }
 }

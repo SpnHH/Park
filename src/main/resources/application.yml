@@ -1,0 +1,6 @@
+app:
+  Datasource:
+    url: jdbc:postgresql://localhost:5432/Park
+    username: postgres
+    password: 1234
+    pool-size: 30

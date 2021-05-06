@@ -1,0 +1,5 @@
+CREATE TABLE users (
+    id UUID NOT NULL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    pass VARCHAR(100) NOT NULL
+);

@@ -1,6 +1,6 @@
 package com.park.Park.api;
 
-import com.park.Park.model.User;
+import com.park.Park.model.Users;
 import com.park.Park.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -20,17 +20,17 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@NonNull @RequestBody User user){
+    public void addUser(@NonNull @RequestBody Users user){
         userService.addUser(user);
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<Users> getAllUsers(){
         return userService.getAllUser();
     }
 
     @GetMapping(path = "/{id}")
-    public User getPersonById(@PathVariable("id") UUID id){
+    public Users getPersonById(@PathVariable("id") UUID id){
         return userService.getUserById(id).orElse(null);
     }
 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping (path = "/{id}")
-    public void updateUser(@PathVariable("id") UUID id, @NonNull @RequestBody User newUser){
+    public void updateUser(@PathVariable("id") UUID id, @NonNull @RequestBody Users newUser){
         userService.updateUser(id,newUser);
     }
 }

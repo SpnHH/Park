@@ -1,38 +1,54 @@
 package com.park.Park.dao;
 
-import com.park.Park.model.User;
+import com.park.Park.model.Users;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.sql.SQLException;
+import java.util.*;
 
 @Repository("postgre")
 public class UserDataAccessService implements UserDao {
-    private static List<User> DB = new ArrayList<>();
+    private static List<Users> DB = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public UserDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
-    public int insertUser(UUID id, User user) {
-        DB.add(new User(id, user.getUsername(), user.getPass()));
+    public int insertUser(UUID id, Users user) {
+        DB.add(new Users(id, user.getUsername(), user.getPass()));
         return 1;
     }
 
     @Override
-    public List<User> selectAllUsers() {
-        return DB;
+    public List<Users> selectAllUsers() {
+        final String sql = "SELECT id, username, pass FROM users";
+            return jdbcTemplate.query(sql,(resultSet,i) ->{
+               UUID id = UUID.fromString(resultSet.getString("id"));
+               String name = resultSet.getString("username");
+               String pass = resultSet.getString("pass");
+               return new Users(id, name, pass);
+            });
     }
-
     @Override
-    public Optional<User> selectUserById(UUID id) {
-        return DB.stream()
-                .filter( user -> user.getId().equals(id))
-                .findFirst();
+    public Optional<Users> selectUserById(UUID id) {
+        final String sql = "SELECT id, username , password FROM user WHERE id = ?";
+        var user = jdbcTemplate.queryForObject (sql, new Object[] {id},(resultSet, i) ->{
+            UUID userId = UUID.fromString(resultSet.getString("id"));
+            String name = resultSet.getString("username");
+            String pass = resultSet.getString("pass");
+            return new Users(userId, name, pass);
+        });
+        return Optional.ofNullable(user);
     }
 
     @Override
     public int deteleUserById(UUID id) {
-        Optional<User> user = selectUserById(id);
+        Optional<Users> user = selectUserById(id);
         if(user.isEmpty()){
             return 0;
         }
@@ -41,12 +57,12 @@ public class UserDataAccessService implements UserDao {
     }
 
     @Override
-    public int updateUserById(UUID id, User user) {
+    public int updateUserById(UUID id, Users user) {
         return selectUserById(id)
                 .map(u -> {
                     int indexOfUserToUpdate = DB.indexOf(u);
                     if(indexOfUserToUpdate >= 0){
-                        DB.set(indexOfUserToUpdate, new User(id, user.getUsername(), user.getPass()));
+                        DB.set(indexOfUserToUpdate, new Users(id, user.getUsername(), user.getPass()));
                         return 1;
                     }
                     return 0;
