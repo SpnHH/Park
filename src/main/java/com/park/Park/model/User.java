@@ -1,15 +1,19 @@
 package com.park.Park.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class User {
     private final UUID id;
-    private final String usename;
+    private final String username;
     private final String pass;
 
-    public User(UUID id, String usename, String pass) {
+    public User(@JsonProperty("id") UUID id,
+                @JsonProperty("username")String username,
+                @JsonProperty("pass")String pass) {
         this.id = id;
-        this.usename = usename;
+        this.username = username;
         this.pass = pass;
     }
 
@@ -17,8 +21,8 @@ public class User {
         return id;
     }
 
-    public String getUsename() {
-        return usename;
+    public String getUsername() {
+        return username;
     }
 
     public String getPass() {
