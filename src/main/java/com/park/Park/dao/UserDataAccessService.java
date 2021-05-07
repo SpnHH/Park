@@ -20,7 +20,9 @@ public class UserDataAccessService implements UserDao {
 
     @Override
     public int insertUser(UUID id, Users user) {
-        DB.add(new Users(id, user.getUsername(), user.getPass()));
+        //DB.add(new Users(id, user.getUsername(), user.getPass()));
+        final String sql = "INSERT INTO users (id, username, pass)" + "VALUES(?,?,?)";
+        jdbcTemplate.update(sql, id, user.getUsername(),user.getPass());
         return 1;
     }
 
@@ -32,8 +34,6 @@ public class UserDataAccessService implements UserDao {
     }
     @Override
     public Optional<Users> selectUserById(UUID id) {
-        final String sql = "SELECT id, username , password FROM user WHERE id = " + id.toString();
-       // var u = jdbcTemplate.queryForObject(sql, new UserMapper());
         Users u = null;
         for ( Users user : selectAllUsers()) {
             if(user.getId().equals(id)){
@@ -45,24 +45,14 @@ public class UserDataAccessService implements UserDao {
 
     @Override
     public int deteleUserById(UUID id) {
-        Optional<Users> user = selectUserById(id);
-        if(user.isEmpty()){
-            return 0;
-        }
-        DB.remove(user.get());
+        final String sql = "DELETE FROM users WHERE id=?";
+        jdbcTemplate.update(sql, id);
         return 1;
     }
 
     @Override
     public int updateUserById(UUID id, Users user) {
-        return selectUserById(id)
-                .map(u -> {
-                    int indexOfUserToUpdate = DB.indexOf(u);
-                    if(indexOfUserToUpdate >= 0){
-                        DB.set(indexOfUserToUpdate, new Users(id, user.getUsername(), user.getPass()));
-                        return 1;
-                    }
-                    return 0;
-                }).orElse(0);
+        String sql = "Update users SET pass = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, user.getPass(), id);
     }
 }
