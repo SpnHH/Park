@@ -11,7 +11,7 @@ public class Codes {
     @NotNull
     private final UUID userId;
     @NotNull
-    private final String password;
+    private String password;
 
     public Codes(@JsonProperty("id") UUID id,
                  @JsonProperty("userId") UUID userId,
@@ -32,5 +32,9 @@ public class Codes {
 
     public UUID getUserId() {
         return userId;
+    }
+
+    public void setPassword(String str){
+        this.password = str;
     }
 }

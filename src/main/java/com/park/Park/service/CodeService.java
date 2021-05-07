@@ -19,8 +19,8 @@ public class CodeService {
         this.codeDao = codeDao;
     }
 
-    public int generateCode(Codes code){
-        return codeDao.generateCode(code);
+    public int generateCode(UUID userId){
+        return codeDao.generateCode(userId);
     }
 
     public Optional<Codes> getCodeByUserId(UUID userId){

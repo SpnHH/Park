@@ -21,9 +21,9 @@ public class CodeController {
         this.codeService = codeService;
     }
 
-    @PostMapping
-    public void generateCode(@NonNull @RequestBody Codes code){
-        codeService.generateCode(code);
+    @PostMapping(path = "/{userId}")
+    public void generateCode(@NonNull @PathVariable("userId") UUID userId){
+        codeService.generateCode(userId);
     }
 
     @GetMapping(path = "/{userId}")

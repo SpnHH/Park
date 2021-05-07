@@ -19,16 +19,26 @@ public class CodeDataAccessService implements CodeDao{
 
     @Override
     public int generateCode(UUID id, Codes code) {
-        return 0;
+        final String sql = "INSERT INTO codes (id, userId, password)" + "VALUES(?,?,?)";
+        jdbcTemplate.update(sql, id, code.getUserId(),code.getPassword());
+        return 1;
     }
 
     @Override
     public int deleteCode(UUID userId) {
-        return 0;
+        final String sql ="DELETE FROM codes WHERE userId=?";
+        return jdbcTemplate.update(sql, userId);
     }
 
     @Override
     public Optional<Codes> getCodeByUserId(UUID userId) {
+        final String sql ="SELECT * FROM codes";
+        var codes = jdbcTemplate.query(sql,new CodeMapper());
+        for(var code:codes){
+            if(code.getUserId().equals(userId)){
+                return Optional.ofNullable(code);
+            }
+        }
         return Optional.empty();
     }
 }
