@@ -27,23 +27,20 @@ public class UserDataAccessService implements UserDao {
     @Override
     public List<Users> selectAllUsers() {
         final String sql = "SELECT id, username, pass FROM users";
-            return jdbcTemplate.query(sql,(resultSet,i) ->{
-               UUID id = UUID.fromString(resultSet.getString("id"));
-               String name = resultSet.getString("username");
-               String pass = resultSet.getString("pass");
-               return new Users(id, name, pass);
-            });
+            var u = jdbcTemplate.query(sql, new UserMapper());
+            return u;
     }
     @Override
     public Optional<Users> selectUserById(UUID id) {
-        final String sql = "SELECT id, username , password FROM user WHERE id = ?";
-        var user = jdbcTemplate.queryForObject (sql, new Object[] {id},(resultSet, i) ->{
-            UUID userId = UUID.fromString(resultSet.getString("id"));
-            String name = resultSet.getString("username");
-            String pass = resultSet.getString("pass");
-            return new Users(userId, name, pass);
-        });
-        return Optional.ofNullable(user);
+        final String sql = "SELECT id, username , password FROM user WHERE id = " + id.toString();
+       // var u = jdbcTemplate.queryForObject(sql, new UserMapper());
+        Users u = null;
+        for ( Users user : selectAllUsers()) {
+            if(user.getId().equals(id)){
+                return Optional.ofNullable(user);
+            }
+        }
+        return Optional.ofNullable(u);
     }
 
     @Override
