@@ -6,6 +6,7 @@ import com.sun.istack.NotNull;
 import java.util.UUID;
 
 public class Users {
+    @NotNull
     private final UUID id;
     @NotNull
     private final String username;
