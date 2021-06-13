@@ -2,6 +2,7 @@ package com.park.Park.dao;
 
 import com.park.Park.model.Codes;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,6 +17,7 @@ public interface CodeDao {
 
     int deleteCode(UUID userId);
     Optional<Codes> getCodeByUserId(UUID userId);
+    List<Codes> getCodes();
 
     static String getAlphaNumericString(int n)
     {

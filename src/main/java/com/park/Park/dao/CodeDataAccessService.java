@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public class CodeDataAccessService implements CodeDao{
     @Override
     public int generateCode(UUID id, Codes code) {
         final String sql = "INSERT INTO codes (id, userId, password)" + "VALUES(?,?,?)";
-        jdbcTemplate.update(sql, id, code.getUserId(),code.getPassword());
+        jdbcTemplate.update(sql, id, code.getUserId(),code.getPass());
         return 1;
     }
 
@@ -40,5 +41,12 @@ public class CodeDataAccessService implements CodeDao{
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Codes> getCodes() {
+        final String sql = "SELECT * FROM codes";
+        var c = jdbcTemplate.query(sql, new CodeMapper());
+        return c;
     }
 }

@@ -14,7 +14,7 @@ public class CodeMapper implements RowMapper<Codes> {
     public Codes mapRow(ResultSet rs, int rn ) throws SQLException{
         var codeId = UUID.fromString(rs.getString("id"));
         var userId = UUID.fromString(rs.getString("userId"));
-        var pass = rs.getString("password");
+        var pass = rs.getString("pass");
         Codes code= new Codes(codeId,userId,pass);
 
         return code;

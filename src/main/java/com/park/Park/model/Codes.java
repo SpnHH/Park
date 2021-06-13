@@ -11,19 +11,19 @@ public class Codes {
     @NotNull
     private final UUID userId;
     @NotNull
-    private String password;
+    private String pass;
 
     public Codes(@JsonProperty("id") UUID id,
                  @JsonProperty("userId") UUID userId,
-                 @JsonProperty("password")String password) {
+                 @JsonProperty("pass")String pass) {
 
         this.id = id;
         this.userId = userId;
-        this.password = password;
+        this.pass = pass;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
     public UUID getId() {
@@ -34,7 +34,7 @@ public class Codes {
         return userId;
     }
 
-    public void setPassword(String str){
-        this.password = str;
+    public void setPass(String str){
+        this.pass = str;
     }
 }

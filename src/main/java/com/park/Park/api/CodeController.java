@@ -30,6 +30,10 @@ public class CodeController {
     public Optional<Codes> getCodeByUserId(@PathVariable("userId")UUID userId){
         return codeService.getCodeByUserId(userId);
     }
+    @GetMapping
+    public List<Codes> getCodes(){
+        return codeService.getCodes();
+    }
 
     @DeleteMapping(path = "/{userId}")
     public void deleteCodeByUserId(@PathVariable("userId") UUID userId){
