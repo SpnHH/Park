@@ -36,8 +36,18 @@ public class SpotController {
         return spotService.getSpotById(id).orElse(null);
     }
 
-    @PutMapping (path = "/{id}")
-    public void updateSpot(@PathVariable("id") UUID id, @NonNull @RequestBody Spots newSpot){
-        spotService.updateSpotById(id,newSpot);
+//    @PutMapping (path = "/{id}")
+//    public void updateSpot(@PathVariable("id") UUID id, @NonNull @RequestBody Spots newSpot){
+//        spotService.updateSpotById(id,newSpot);
+//    }
+    @PutMapping (path = "/{flag}")
+    public int busySpot(@PathVariable("flag") boolean flag){
+        if(flag){
+            return spotService.busySpot();
+        }else{
+            return spotService.freeSpot();
+        }
+
     }
+
 }

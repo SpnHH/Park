@@ -15,7 +15,7 @@ public interface SpotDao {
     Optional<Spots> selectSpotById(UUID id);
     public int updateSpotById(UUID id, Spots spot);
     public int addSpot(UUID id, Spots spot);
-
+    public int busySpot(UUID id, Spots spot);
     default int addSpot(Spots spots){
         return addSpot(UUID.randomUUID(), spots);
     }

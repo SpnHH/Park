@@ -37,4 +37,26 @@ public class SpotService {
         return spotDao.addSpot(spot);
     }
 
+    public int busySpot(){
+        List<Spots> spotsList = spotDao.getSpots();
+        for (var spot : spotsList){
+            if(spot.getAvailable()){
+                spot.setAvailable(false);
+                spotDao.updateSpotById(spot.getId(),spot);
+                return 1;
+            }
+        }
+        return 0;
+    }
+    public int freeSpot(){
+        List<Spots> spotsList = spotDao.getSpots();
+        for (var spot : spotsList){
+            if(!spot.getAvailable()){
+                spot.setAvailable(true);
+                spotDao.updateSpotById(spot.getId(),spot);
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

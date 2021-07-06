@@ -45,9 +45,15 @@ public class SpotDataAccessService implements SpotDao{
 
     @Override
     public int addSpot(UUID id, Spots spot) {
-        final String sql = "INSERT INTO spots (id, spotnr, available)" + "VALUES(?,?,?)";
+        final String sql = "INSERT INTO spots (id, spotnr, available, isfree)" + "VALUES(?,?,?,?)";
         jdbcTemplate.update(sql, id, spot.getSpotNR(),spot.getAvailable());
         return 1;
+    }
+
+    @Override
+    public int busySpot(UUID id, Spots spot) {
+        String sql = "Update spots SET available = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, spot.getAvailable(), id);
     }
 
 

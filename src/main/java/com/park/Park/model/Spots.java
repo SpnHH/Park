@@ -15,7 +15,8 @@ public class Spots {
 
     public Spots(@JsonProperty("id") UUID id,
                  @JsonProperty("spotnr") int spotNR,
-                 @JsonProperty("available")boolean available) {
+                 @JsonProperty("available")boolean available,
+                 @JsonProperty("isfree")boolean isFree) {
 
         this.id = id;
         this.spotNR = spotNR;
@@ -29,6 +30,11 @@ public class Spots {
     public boolean getAvailable(){
         return available;
     }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     public int getSpotNR (){
         return spotNR;
     }

@@ -14,7 +14,8 @@ public class SpotMapper implements RowMapper<Spots> {
         var spotId = UUID.fromString(rs.getString("id"));
         var spotNR = rs.getInt("spotnr");
         var available = rs.getBoolean("available");
-        Spots spot= new Spots(spotId,spotNR,available);
+        var isfree = rs.getBoolean("isfree");
+        Spots spot= new Spots(spotId,spotNR,available,isfree);
 
         return spot;
     }

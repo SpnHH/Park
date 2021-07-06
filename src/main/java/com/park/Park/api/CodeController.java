@@ -37,6 +37,20 @@ public class CodeController {
 
     @DeleteMapping(path = "/{userId}")
     public void deleteCodeByUserId(@PathVariable("userId") UUID userId){
-        codeService.deleteCode(userId);
+        if(userId.toString().length()<=12){
+            codeService.deleteCodeByCode(userId.toString());
+        }else {
+            codeService.deleteCode(userId);
+        }
     }
+
+    @PutMapping(path = "/{userId}")
+    public void deleteCodeByUserIdForESP(@PathVariable("userId") UUID userId){
+            codeService.deleteCode(userId);
+    }
+
+//    @DeleteMapping(path = "/{code}")
+//    public void deleteCodeByUserId(@PathVariable("code") String code){
+//        codeService.deleteCodeByCode(code);
+//    }
 }

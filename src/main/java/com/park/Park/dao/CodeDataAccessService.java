@@ -20,7 +20,7 @@ public class CodeDataAccessService implements CodeDao{
 
     @Override
     public int generateCode(UUID id, Codes code) {
-        final String sql = "INSERT INTO codes (id, userId, password)" + "VALUES(?,?,?)";
+        final String sql = "INSERT INTO codes (id, userId, pass)" + "VALUES(?,?,?)";
         jdbcTemplate.update(sql, id, code.getUserId(),code.getPass());
         return 1;
     }
